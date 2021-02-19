@@ -26,6 +26,7 @@
               type="text"
               v-bind:value="valueInput"
               v-on:input="handleInput"
+              v-on:keypress.enter="addTask"
             />
             <button class="btn" v-on:click="addTask">Add a new task</button>
           </div>
@@ -34,28 +35,34 @@
       <div class="container">
         <h2>
           <span>To Do</span>
-          <span class="mask-num">10</span>
+          <span class="mask-num">{{ needDoList.length }}</span>
         </h2>
         <ul class="mask-list">
-          <li v-for="(mask, index) in needDoLIst" :key="mask.id">
+          <li v-for="(mask, index) in needDoList" :key="mask.id">
             <div>
-              <input type="checkbox" name="" id="" />
+              <input type="checkbox" v-on:change="doCheck(index, 'need')" />
               <span>{{ mask.title }}</span>
             </div>
-            <button class="btn-remove">Remove</button>
+            <button class="btn-remove" v-on:click="removeMask(index, 'need')">Remove</button>
           </li>
         </ul>
         <h2>
           <span>Done</span>
-          <span class="mask-num">10</span>
+          <span class="mask-num">{{ completeList.length }}</span>
         </h2>
         <ul class="mask-list complete-list">
-          <li>
+          <li v-for="(mask, index) in completeList" :key="mask.id">
             <div>
-              <input type="checkbox" checked />
-              <span>Add Code</span>
+              <input
+                type="checkbox"
+                checked
+                v-on:change="doCheck(index, 'complete')"
+              />
+              <span>{{ mask.title }}</span>
             </div>
-            <button class="btn-remove">Remove</button>
+            <button class="btn-remove" v-on:click="removeMask(index, 'complete')">
+              Remove
+            </button>
           </li>
         </ul>
       </div>
